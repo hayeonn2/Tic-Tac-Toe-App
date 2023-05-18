@@ -10,8 +10,20 @@ export default class Board extends Component {
     };
   }
 
+  handleClick(i) {
+    // 모든 배열 새롭게 복사
+    const squares = this.state.squares.slice();
+    squares[i] = "X";
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i) {
-    return <Square value={this.state.squares[i]} />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
