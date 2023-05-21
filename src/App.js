@@ -30,40 +30,40 @@ function App() {
       }
       return null;
     }
+  };
 
-    const current = history[history.length - 1];
-    const winner = calculateWinner(current.squares);
+  const current = history[history.length - 1];
+  const winner = calculateWinner(current.squares);
 
-    let status;
+  let status;
 
-    if (winner) {
-      status = "Winner: " + winner;
-    } else {
-      status = `Next player: ${xIsNext ? "X" : "O"}`;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = `Next player: ${xIsNext ? "X" : "O"}`;
+  }
+
+  const handleClick = (i) => {
+    const newSquares = current.squares.slice();
+    if (calculateWinner(newSquares) || newSquares[i]) {
+      return;
     }
 
-    const handleClick = (i) => {
-      const newSquares = current.squares.slice();
-      if (calculateWinner(newSquares) || newSquares[i]) {
-        return;
-      }
-
-      newSquares[i] = xIsNext ? "X" : "O";
-      setHistory([...history, { squares: newSquares }]);
-      setXIsNext((prev) => !prev);
-    };
-
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board squares={current.squares} onClick={(i) => handleClick(i)} />
-        </div>
-        <div className="game-info">
-          <div className="status">{status}</div>
-        </div>
-      </div>
-    );
+    newSquares[i] = xIsNext ? "X" : "O";
+    setHistory([...history, { squares: newSquares }]);
+    setXIsNext((prev) => !prev);
   };
+
+  return (
+    <div className="game">
+      <div className="game-board">
+        <Board squares={current.squares} onClick={(i) => handleClick(i)} />
+      </div>
+      <div className="game-info">
+        <div className="status">{status}</div>
+      </div>
+    </div>
+  );
 }
 
 export default App;
